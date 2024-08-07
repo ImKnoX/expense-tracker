@@ -1,22 +1,21 @@
 const prisma = require("../src/utils/db")
 
 async function main() {
-    const uangMama =  prisma.transaction.create({
+
+    const narik = prisma.category.create({
         data: {
-            text: 'Uang Dari Mama',
-            amount: 1000000,
-            purchaseDate: 'Senin, 15-07-24',
+            name: 'Penarikan Uang'
         }
     })
-    const alfamartSeed01 = prisma.transaction.create({
+
+    const tagihan = prisma.category.create({
         data: {
-            text: 'Pakai buat jajan alfamart',
-            amount: 22600,
-            purchaseDate: 'Rabu, 18-07-24',
+            name: 'Tagihan Bulanan'
         }
     })
-    const [uangResult, alfamartSeedResult] = await Promise.all([uangMama, alfamartSeed01])
-    console.log({ uangResult, alfamartSeedResult })
+
+    const [narikResult, tagihanResult] = await Promise.all([narik, tagihan])
+    console.log({ narikResult, tagihanResult })
 }
 
 main()

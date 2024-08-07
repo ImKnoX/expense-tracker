@@ -11,7 +11,8 @@ function getLatestMoney(id) {
 function getAllTransactions() {
     return prisma.transaction.findMany({
         include: {
-            receipt: true
+            receipt: true,
+            category: true
         },
         orderBy: {
             purchaseDate: 'desc'
@@ -19,12 +20,42 @@ function getAllTransactions() {
     })
 }
 
-function addTransaction(text, amount, purchaseDate) {
+function addTransaction(text, amount, purchaseDate, category) {
     return prisma.transaction.create({
         data: {
             text,
             amount,
-            purchaseDate
+            purchaseDate,
+            categoryId: category
+        }
+    })
+}
+
+function updateOneTransaction(id, data) {
+    return prisma.transaction.update({
+        where: {
+            id: String(id)
+        },
+        data: data
+    })
+}
+
+function deleteOneTransaction(id) {
+    return prisma.transaction.delete({
+        where: {
+            id: String(id)
+        }
+    })
+}
+
+function getOneTransaction(id) {
+    return prisma.transaction.findFirst({
+        where: {
+            id: String(id)
+        },
+        include: {
+            category: true,
+            receipt: true
         }
     })
 }
@@ -32,5 +63,8 @@ function addTransaction(text, amount, purchaseDate) {
 module.exports = {
     getAllTransactions,
     addTransaction,
-    getLatestMoney
+    getLatestMoney,
+    updateOneTransaction,
+    deleteOneTransaction,
+    getOneTransaction
 }

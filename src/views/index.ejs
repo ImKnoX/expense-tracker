@@ -21,6 +21,15 @@
                 <input type="text" name="purchaseDate" class="form-control" id="FormControlInput3" placeholder="Senin, 12-05-24" required>
             </div>
             <div class="mb-3">
+                <label for="dropdowninput1" class="form-label">Select Categories</label>
+                <select class="form-select" name="category" id="dropdowninput1" aria-label="Default select example" required> 
+                    <option selected>Open this select menu</option>
+                    <% categories.map((c) => { %>
+                        <option value="<%= c.id %>"><%= c.name %></option>
+                    <% }) %>
+                </select>
+            </div>
+            <div class="mb-3">
                 <label for="FormControlInput4" class="form-label">Receipt(Optional)</label>
                 <input type="file" class="form-control" id="FormControlInput4" accept="image/*">
             </div>
