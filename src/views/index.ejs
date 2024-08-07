@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <%- include('partials/manifest.ejs')  %>
+    <title>Expense Tracker</title>
+</head>
+<body>
+    <div class="mb-4">
+        <h2 class="text-center">Pengeluaran Duit Di Batam</h2>
+        <form action="/transactions/add" method="post">
+            <div class="mb-3">
+                <label for="FormControlInput1" class="form-label">Text</label>
+                <input type="text" name="text" class="form-control" id="FormControlInput1" placeholder="Tolong Diketik..." required>
+            </div>
+            <div class="mb-3">
+                <label for="FormControlInput2" class="form-label">Amount</label>
+                <input type="number" name="amount" class="form-control" id="FormControlInput2" placeholder="10000" required>
+            </div>
+            <div class="mb-3">
+                <label for="FormControlInput3" class="form-label">Purchase Date</label>
+                <input type="text" name="purchaseDate" class="form-control" id="FormControlInput3" placeholder="Senin, 12-05-24" required>
+            </div>
+            <div class="mb-3">
+                <label for="FormControlInput4" class="form-label">Receipt(Optional)</label>
+                <input type="file" class="form-control" id="FormControlInput4" accept="image/*">
+            </div>
+            <button type="submit" class="btn btn-primary mb-2">Tambah</button>
+        </form>
+    </div>
+    <table class="table table-striped">
+    <thead>
+        <tr>
+            <th scope="col"># ID</th>
+            <th scope="col">Pemakaian</th>
+            <th scope="col">Duit Yg Terpakai</th>
+            <th scope="col">Tanggal Pembelian</th>
+        </tr>
+    </thead>
+    <tbody class="table-group-divider">
+        <% data.map((t) => { %>
+            <tr>
+                <th scope="row"><%= t.id %></th>
+                <td><%= t.text %></td>
+                <td><%= t.amount.toLocaleString() %> IDR</td>
+                <td><%= t.purchaseDate %></td>
+            </tr>
+        <% }) %>
+
+        <tr>
+            <th scope="row">Total</th>
+            <td>-</td>
+            <td><%= totals.toLocaleString() %> IDR</td>
+            <td>-</td>
+        </tr>
+    </tbody>
+    <tbody>
+      
+    </tbody>
+    </table>
+</body>
+</html>
