@@ -25,10 +25,11 @@ app.get('/', async(req, res) => {
     console.log(req.query.page)
     const totals =  await calculateTotalAmount()
     const categories = await getAllCategory()
+    const categorizedData = (await getAllTransactions()).reduce()
     res.render('index', {
         data: transactions,
         totals,
-        categories
+        categories,
     })
 })
 
