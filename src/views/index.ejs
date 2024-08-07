@@ -44,6 +44,8 @@
             <th scope="col">Duit Yg Terpakai</th>
             <th scope="col">Tanggal Pembelian</th>
             <th scope="col">Link</th>
+            <th scope="col">Update</th>
+            <th scope="col">Delete</th>
         </tr>
     </thead>
     <tbody class="table-group-divider">
@@ -58,6 +60,17 @@
                         <i class="bi bi-info-circle-fill"></i>
                     </a>
                 </td>
+                <td>
+                    <a href="/transactions/update/<%= t.id %>">
+                        <i class="bi bi-wrench"></i>
+                    </a>
+                </td>
+                <td>
+                    <form action="/transactions/delete/<%= t.id %>?_method=DELETE" method="post" style="cursor: pointer;">
+                        <i class="bi bi-trash"></i>
+                    </form>
+                </td>
+               
             </tr>
         <% }) %>
 
@@ -67,11 +80,14 @@
             <td><%= totals.toLocaleString() %> IDR</td>
             <td>-</td>
             <td>-</td>
+            <td>-</td>
+            <td>-</td>
         </tr>
     </tbody>
     <tbody>
       
     </tbody>
     </table>
+
 </body>
 </html>

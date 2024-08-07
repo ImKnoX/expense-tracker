@@ -2,6 +2,7 @@ const express = require("express");
 const morgan = require("morgan");
 const path = require("path")
 const transactionRoutes = require('./transactions/transactions.route')
+const methodOverride = require('method-override');
 const app = express()
 const port = process.env.PORT || 3000;
 const middlewares = require('./middlewares');
@@ -19,17 +20,29 @@ app.set('views', viewsDir);
 app.use(express.static(staticDir));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }))
+app.use(methodOverride('_method'));
 
 app.get('/', async(req, res) => {
     const transactions = await getAllTransactions()
-    console.log(req.query.page)
     const totals =  await calculateTotalAmount()
     const categories = await getAllCategory()
-    const categorizedData = (await getAllTransactions()).reduce()
+    const categorizedData = transactions.reduce((acc, transaction) => {
+        const category = transaction.category ? transaction.category.name : 'Uncategorized';
+        acc[category] = (acc[category] || 0) + transaction.amount;
+        return acc;
+      }, {});
+    
+      const labels = Object.keys(categorizedData);
+      const data = Object.values(categorizedData);
+
     res.render('index', {
         data: transactions,
         totals,
         categories,
+        charts: {
+            labels,
+            data
+        }
     })
 })
 

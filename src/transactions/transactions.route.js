@@ -44,6 +44,16 @@ router.delete("/delete/:id", async(req, res, next) => {
     }
 })
 
+router.get('/update/:id', async(req, res, next) => {
+    const { id } = req.params;
+    try {
+        if(!id) res.json({ message: 'You must included an id' })
+        res.render('update')
+    } catch (error) {
+        next(error)
+    }
+})
+
 router.patch("/update/:id", async(req, res, next) => {
     const { text, amount, purchaseDate } = req.body;
     const { id } = req.params;
