@@ -8,6 +8,38 @@ function getLatestMoney(id) {
     })
 }
 
+function filterTransactions(query) {
+    return prisma.transaction.findMany({
+        where: {
+            OR: [
+                {
+                    text: {
+                      contains: query,
+                      mode: 'insensitive',
+                    },
+                  },
+                  {
+                    purchaseDate: {
+                      contains: query,
+                      mode: 'insensitive',
+                    },
+                  },
+                  {
+                    category: {
+                      name: {
+                        contains: query,
+                        mode: 'insensitive',
+                      },
+                    },
+                  },
+            ]
+        },
+        include: {
+            category: true
+        }
+    })
+}
+
 /**
  * The function getAllTransactions retrieves all transactions from the database, including related
  * receipt and category information, and orders them by purchase date in descending order.
@@ -22,7 +54,7 @@ function getAllTransactions() {
             category: true
         },
         orderBy: {
-            purchaseDate: 'desc'
+            createdAt: 'asc'
         }
     })
 }
@@ -124,5 +156,6 @@ module.exports = {
     getLatestMoney,
     updateOneTransaction,
     deleteOneTransaction,
-    getOneTransaction
+    getOneTransaction,
+    filterTransactions
 }

@@ -7,7 +7,11 @@ const methodOverride = require('method-override');
 const app = express()
 const port = process.env.PORT || 3000;
 const middlewares = require('./middlewares');
-const { getAllTransactions } = require("./transactions/transactions.service");
+const { 
+    getAllTransactions, 
+    getLatestMoney, 
+    filterTransactions 
+} = require("./transactions/transactions.service");
 const calculateTotalAmount = require("./utils/calculateTotalAmount");
 const { getAllCategory } = require("./transactions/category.service");
 
@@ -24,14 +28,22 @@ app.use(express.urlencoded({ extended: true }))
 app.use(methodOverride('_method'));
 
 app.get('/', async(req, res) => {
+    const query = req.query.queryTransactions;
+    const queryTransactions = await filterTransactions(query)
     const transactions = await getAllTransactions()
     const totals =  await calculateTotalAmount()
     const categories = await getAllCategory()
+    const money = await getLatestMoney(1)
 
     res.render('index', {
         data: transactions,
         totals,
-        categories
+        categories,
+        money: money.text,
+        query: {
+            search: queryTransactions,
+            data: query
+        }
     })
 })
 

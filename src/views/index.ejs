@@ -5,6 +5,22 @@
     <title>Expense Tracker</title>
 </head>
 <body>
+    <%# Balance Counter %>
+    <div class="mb-3">
+        <div class="container mt-3">
+            <div class="card text-center">
+              <div class="card-header">
+                Current Balance
+              </div>
+              <div class="card-body">
+                <h2 class="card-title" id="balance">
+                    <%= include('partials/_money.ejs', { money }) %>
+                </h2>
+              </div>
+            </div>
+          </div>
+    </div>
+    <%# Submit Form %>
     <div class="mb-4">
         <h2 class="text-center">Pengeluaran Duit Di Batam</h2>
         <form action="/transactions/add" method="post">
@@ -36,6 +52,14 @@
             <button type="submit" class="btn btn-primary mb-2"><i class="bi bi-upload"></i> Tambah</button>
         </form>
     </div>
+    <div>
+        <% if (query.search.length > 0) { %>
+        
+        <% } else { %>
+            <h2>Search Results for "<%= query.data %>"</h2>
+        <% } %>
+    </div>
+    <% if (query.search.length > 0) { %>
     <table class="table table-striped">
     <thead>
         <tr>
@@ -88,6 +112,7 @@
       
     </tbody>
     </table>
+    <% } %>
 
 </body>
 </html>

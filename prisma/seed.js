@@ -2,20 +2,14 @@ const prisma = require("../src/utils/db")
 
 async function main() {
 
-    const narik = prisma.category.create({
-        data: {
-            name: 'Penarikan Uang'
-        }
-    })
+   const saldo = prisma.money.create({
+    data: {
+        text: 1074894
+    }
+   })
 
-    const tagihan = prisma.category.create({
-        data: {
-            name: 'Tagihan Bulanan'
-        }
-    })
-
-    const [narikResult, tagihanResult] = await Promise.all([narik, tagihan])
-    console.log({ narikResult, tagihanResult })
+    const [saldoResult] = await Promise.all([saldo])
+    console.log({ saldoResult })
 }
 
 main()
