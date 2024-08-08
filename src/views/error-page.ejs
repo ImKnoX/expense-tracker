@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+   <%- include('partials/manifest.ejs') %>
+    <title>Error - Something Went Wrong</title>
+    <style>
+        .error-container {
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            background-color: #f8f9fa;
+        }
+        .error-container h1 {
+            font-size: 3rem;
+            color: #dc3545;
+        }
+        .error-container p {
+            font-size: 1.5rem;
+        }
+        .error-container a {
+            font-size: 1.2rem;
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container error-container">
+        <div>
+            <h1>Oops! Something Went Wrong</h1>
+            <p>We're experiencing technical difficulties. Please try again later.</p>
+            <p><%= message %></p>
+            <a href="/" class="btn btn-primary">Go Home</a>
+        </div>
+    </div>
+</body>
+</html>

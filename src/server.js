@@ -2,6 +2,7 @@ const express = require("express");
 const morgan = require("morgan");
 const path = require("path")
 const transactionRoutes = require('./transactions/transactions.route')
+const chartRoute = require('./chart/chart.route')
 const methodOverride = require('method-override');
 const app = express()
 const port = process.env.PORT || 3000;
@@ -26,27 +27,16 @@ app.get('/', async(req, res) => {
     const transactions = await getAllTransactions()
     const totals =  await calculateTotalAmount()
     const categories = await getAllCategory()
-    const categorizedData = transactions.reduce((acc, transaction) => {
-        const category = transaction.category ? transaction.category.name : 'Uncategorized';
-        acc[category] = (acc[category] || 0) + transaction.amount;
-        return acc;
-      }, {});
-    
-      const labels = Object.keys(categorizedData);
-      const data = Object.values(categorizedData);
 
     res.render('index', {
         data: transactions,
         totals,
-        categories,
-        charts: {
-            labels,
-            data
-        }
+        categories
     })
 })
 
 app.use('/transactions', transactionRoutes)
+app.use('/chart', chartRoute)
 
 app.use(middlewares.notFound)
 app.use(middlewares.errorHandler)
